@@ -6,10 +6,17 @@ function neighbors = get_neighbors(location, stencil, fieldSize)
 % Center stencil at location
 neighbors = [stencil(:,1) + location(1), stencil(:,2) + location(2)];
 
-% Implement periodic boundary condition
-neighbors(neighbors <= 0) = ...
-    neighbors(neighbors <= 0) + fieldSize;
-neighbors(neighbors > fieldSize) = ...
-    neighbors(neighbors > fieldSize) - fieldSize;
+% Implement lateral periodic boundary condition
+
+neighbors((neighbors(:,2) <= 0), 2) = ...
+    neighbors((neighbors(:,2) <= 0), 2) + fieldSize;
+
+neighbors((neighbors(:,2) > fieldSize), 2) = ...
+    neighbors((neighbors(:,2) > fieldSize), 2) - fieldSize;
+
+% Implement bottom and top wall boundary conditions
+
+neighbors = neighbors(~(neighbors(:,1) <= 0), :);
+neighbors = neighbors(~(neighbors(:,1) > fieldSize), :);
 
 end

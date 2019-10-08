@@ -55,8 +55,6 @@ nextField = field;
 
 while ~(exhausted || penetrated)
     
-    change = 0;
-    
     % Iterate through all locations
     for i = 1:fieldSize
         for j = 1:fieldSize
